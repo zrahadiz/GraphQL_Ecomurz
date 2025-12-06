@@ -1,8 +1,6 @@
-const GRAPHQL_ENDPOINT = "http://localhost:4000/graphql";
-
 export const graphqlClient = async (query, variables = {}) => {
   try {
-    const response = await fetch(GRAPHQL_ENDPOINT, {
+    const response = await fetch(import.meta.env.VITE_GRAPHQL_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
