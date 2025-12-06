@@ -22,6 +22,7 @@ import {
   AlertTriangle,
   Filter,
 } from "lucide-react";
+import { toast } from "../lib/toast";
 
 function ListProducts() {
   const [products, setProducts] = useState([]);
@@ -113,9 +114,17 @@ function ListProducts() {
       await fetchProducts();
       await fetchStats();
       setDeleteDialog({ isOpen: false, product: null });
+      toast("Product deleted successfully!", {
+        type: "success",
+        position: "top-center",
+      });
     } catch (err) {
       setError("Failed to delete product");
       console.error("Error deleting product:", err);
+      toast("Failed to delete product", {
+        type: "error",
+        position: "top-center",
+      });
     }
     setLoading(false);
   };
@@ -139,9 +148,18 @@ function ListProducts() {
       });
       await fetchProducts();
       await fetchStats();
+
+      toast("Stock updated successfully!", {
+        type: "success",
+        position: "top-center",
+      });
     } catch (err) {
       setError("Failed to update stock");
       console.error("Error updating stock:", err);
+      toast("Failed to update stock", {
+        type: "error",
+        position: "top-center",
+      });
     }
     setLoading(false);
   };

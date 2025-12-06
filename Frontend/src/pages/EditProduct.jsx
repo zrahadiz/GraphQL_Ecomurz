@@ -14,6 +14,7 @@ import {
   Save,
   Loader2,
 } from "lucide-react";
+import { toast } from "../lib/toast";
 
 export default function EditProduct() {
   const { id } = useParams();
@@ -46,6 +47,10 @@ export default function EditProduct() {
     } catch (err) {
       console.error(err);
       setError("Failed to load product");
+      toast("Failed to load product.", {
+        type: "error",
+        position: "top-center",
+      });
     } finally {
       setLoading(false);
     }
@@ -68,13 +73,18 @@ export default function EditProduct() {
       });
 
       setSuccess(true);
-      setTimeout(() => {
-        // navigate("/products");
-        console.log("Navigate to products page");
-      }, 1500);
+      toast(`Product updated successfully!`, {
+        type: "success",
+        position: "top-center",
+      });
+      navigate("/products");
     } catch (err) {
       console.error(err);
       setError("Failed to save product");
+      toast("Failed to save product.", {
+        type: "error",
+        position: "top-center",
+      });
     } finally {
       setSaving(false);
     }
@@ -103,11 +113,9 @@ export default function EditProduct() {
         {/* Back Button */}
         <button
           onClick={() => navigate("/products")}
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors group"
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors group cursor-pointer"
         >
-          <div className="p-2 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
-            <ArrowLeft className="w-5 h-5" />
-          </div>
+          <ArrowLeft className="w-5 h-5" />
           <span className="font-medium">Back to Products</span>
         </button>
 
@@ -264,61 +272,23 @@ export default function EditProduct() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                <button
-                  onClick={() => navigate("/products")}
-                  disabled={saving}
-                  className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Cancel
-                </button>
-
-                <button
-                  onClick={handleSave}
-                  disabled={saving}
-                  className="flex-1 sm:flex-auto bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                >
-                  {saving ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      Saving Changes...
-                    </span>
-                  ) : (
-                    <span className="flex items-center justify-center gap-2">
-                      <Save className="w-5 h-5" />
-                      Save Changes
-                    </span>
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Info Card */}
-        <div className="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-100">
-          <div className="flex items-start gap-3">
-            <div className="shrink-0 mt-0.5">
-              <svg
-                className="w-5 h-5 text-blue-600"
-                fill="currentColor"
-                viewBox="0 0 20 20"
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="w-full bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none cursor-pointer"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-blue-900 mb-1">
-                Quick Tip
-              </h3>
-              <p className="text-sm text-blue-700">
-                Make sure all information is accurate before saving. Changes
-                will be reflected immediately in your inventory.
-              </p>
+                {saving ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Saving Changes...
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center gap-2">
+                    <Save className="w-5 h-5" />
+                    Save Changes
+                  </span>
+                )}
+              </button>
             </div>
           </div>
         </div>

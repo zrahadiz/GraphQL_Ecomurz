@@ -129,22 +129,6 @@ class ProductModel {
 
     return product;
   }
-
-  bulkUpdate(updates) {
-    const updatedProducts = [];
-
-    updates.forEach((update) => {
-      const product = this.getById(update.id);
-      if (product) {
-        if (update.stock !== undefined) product.stock = update.stock;
-        if (update.price !== undefined) product.price = update.price;
-        product.updatedAt = new Date().toISOString();
-        updatedProducts.push(product);
-      }
-    });
-
-    return updatedProducts;
-  }
 }
 const productModel = new ProductModel();
 

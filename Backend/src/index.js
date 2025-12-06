@@ -23,10 +23,10 @@ async function startServer() {
 
     const { url } = await server.listen({ port: PORT });
 
-    console.log(`🚀 GraphQL Server ready at ${url}`);
-    console.log(`📊 GraphQL Playground: ${url}`);
+    console.log(`GraphQL Server ready at ${url}`);
+    console.log(`GraphQL Playground: ${url}`);
   } catch (error) {
-    console.error("❌ Error starting server:", error);
+    console.error("Error starting server:", error);
     process.exit(1);
   }
 }

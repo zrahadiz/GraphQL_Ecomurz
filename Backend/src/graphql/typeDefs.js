@@ -32,19 +32,14 @@ const typeDefs = gql`
   }
 
   type Query {
-    # Get all products with optional filtering
     products(category: String, limit: Int, offset: Int): [Product!]!
 
-    # Get single product by ID
     product(id: ID!): Product
 
-    # Get products by category
     productsByCategory(category: String!): [Product!]!
 
-    # Search products by name or description
     searchProducts(query: String!): [Product!]!
 
-    # Get product statistics
     productStats: ProductStats!
   }
 
@@ -62,26 +57,13 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    # Add new product
     addProduct(input: ProductInput!): Product!
 
-    # Update existing product
     updateProduct(id: ID!, input: UpdateProductInput!): Product!
 
-    # Delete product
     deleteProduct(id: ID!): Boolean!
 
-    # Update stock quantity
     updateStock(id: ID!, quantity: Int!): Product!
-
-    # Bulk update products
-    bulkUpdateProducts(updates: [BulkProductUpdate!]!): [Product!]!
-  }
-
-  input BulkProductUpdate {
-    id: ID!
-    stock: Int
-    price: Float
   }
 `;
 

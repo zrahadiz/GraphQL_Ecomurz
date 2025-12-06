@@ -16,10 +16,6 @@ const mutations = {
   updateStock: (_, { id, quantity }) => {
     return productModel.updateStock(id, quantity);
   },
-
-  bulkUpdateProducts: (_, { updates }) => {
-    return productModel.bulkUpdate(updates);
-  },
 };
 
 module.exports = mutations;

@@ -2,7 +2,17 @@ import { useState } from "react";
 import { graphqlClient } from "@/utils/graphql/config";
 import { MUTATIONS } from "@/utils/graphql/mutations";
 
-import { Package, DollarSign, Hash, Image, FileText, Tag } from "lucide-react";
+import {
+  Package,
+  DollarSign,
+  Hash,
+  Image,
+  FileText,
+  Tag,
+  ArrowLeft,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "../lib/toast";
 
 export default function AddProduct() {
   const [loading, setLoading] = useState(false);
@@ -17,6 +27,8 @@ export default function AddProduct() {
     stock: "",
     imageUrl: "",
   });
+
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -33,17 +45,19 @@ export default function AddProduct() {
       const { data } = await graphqlClient(MUTATIONS.ADD_PRODUCT, { input });
       setSuccessMsg(`Product "${data.addProduct.name}" created successfully!`);
 
-      setFormData({
-        name: "",
-        description: "",
-        price: "",
-        category: "",
-        stock: "",
-        imageUrl: "",
+      toast(`Product "${data.addProduct.name}" created successfully!`, {
+        type: "success",
+        position: "top-center",
       });
+
+      navigate("/products");
     } catch (error) {
       console.error(error);
       setErrorMsg("Failed to create product.");
+      toast("Failed to create product.", {
+        type: "error",
+        position: "top-center",
+      });
     }
 
     setLoading(false);
@@ -58,6 +72,15 @@ export default function AddProduct() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate("/products")}
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors group cursor-pointer"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          <span className="font-medium">Back to Products</span>
+        </button>
+
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg mb-4">
@@ -273,7 +296,7 @@ export default function AddProduct() {
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none cursor-pointer"
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
@@ -305,11 +328,6 @@ export default function AddProduct() {
             </div>
           </div>
         </div>
-
-        {/* Footer Note */}
-        <p className="text-center text-sm text-gray-500 mt-6">
-          All fields marked are required to create a product
-        </p>
       </div>
 
       <style jsx>{`

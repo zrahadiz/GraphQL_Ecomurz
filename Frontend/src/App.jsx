@@ -9,6 +9,7 @@ import EditProduct from "@/pages/EditProduct";
 import ListProducts from "@/pages/ListProducts";
 import AppLayout from "@/components/layouts/AppLayout";
 import AddProduct from "./pages/AddProduct";
+import CustomToaster from "./components/CustomToaster";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="*" element={<Navigate to="/list-products" replace />} />
         </Routes>
       </Router>
+      <CustomToaster />
     </>
   );
 }
