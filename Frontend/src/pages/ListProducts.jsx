@@ -49,6 +49,8 @@ function ListProducts() {
   }, []);
 
   useEffect(() => {
+    console.log("cat 1: ", categoryFilter);
+    console.log("cat 2: ", Boolean(categoryFilter));
     if (categoryFilter) {
       fetchProducts();
     }
@@ -144,38 +146,6 @@ function ListProducts() {
     setLoading(false);
   };
 
-  const resetForm = () => {
-    setFormData({
-      name: "",
-      description: "",
-      price: "",
-      category: "",
-      stock: "",
-      imageUrl: "",
-    });
-    setSelectedProduct(null);
-    setShowForm(false);
-    setError(null);
-  };
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("id-ID", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   const cats = [...new Set(products.map((p) => p.category))];
 
   const fmt = (p) =>
@@ -184,6 +154,7 @@ function ListProducts() {
       currency: "IDR",
       minimumFractionDigits: 0,
     }).format(p);
+
   const fmtDate = (d) =>
     new Date(d).toLocaleDateString("id-ID", {
       year: "numeric",
@@ -194,10 +165,10 @@ function ListProducts() {
     });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
+          <h1 className="text-4xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
             Product Inventory
           </h1>
           <p className="text-gray-600">
@@ -207,7 +178,7 @@ function ListProducts() {
 
         {error && (
           <div className="bg-red-50 border-l-4 border-red-500 rounded-lg p-4 mb-6 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
             <div className="flex-1">
               <h3 className="font-semibold text-red-900 mb-1">Error</h3>
               <p className="text-red-700 text-sm">{error}</p>
@@ -227,14 +198,14 @@ function ListProducts() {
               fetchProducts();
               fetchStats();
             }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-white border-2 border-gray-200 text-gray-700 font-medium rounded-xl hover:border-gray-300 hover:shadow-md transition-all"
+            className="flex items-center gap-2 px-5 py-2.5 bg-white border-2 border-gray-200 text-gray-700 font-medium rounded-xl hover:border-gray-300 hover:shadow-md transition-all cursor-pointer"
           >
             <RefreshCw className="w-5 h-5" />
             Refresh
           </button>
           <button
-            onClick={() => console.log("Add")}
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+            onClick={() => navigate("/add-product")}
+            className="flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all cursor-pointer"
           >
             <Plus className="w-5 h-5" />
             Add Product
@@ -243,7 +214,7 @@ function ListProducts() {
 
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl p-6 text-white">
+            <div className="bg-linear-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl p-6 text-white">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-blue-100 text-sm font-medium mb-1">
@@ -251,8 +222,9 @@ function ListProducts() {
                   </p>
                   <p className="text-4xl font-bold">{stats.totalProducts}</p>
                 </div>
+
                 <div className="p-3 bg-white bg-opacity-20 rounded-xl">
-                  <Package className="w-8 h-8" />
+                  <Package className="w-8 h-8 text-blue-600" />
                 </div>
               </div>
               <div className="flex items-center gap-2 text-blue-100 text-sm">
@@ -326,19 +298,13 @@ function ListProducts() {
                 placeholder="Search products..."
                 className="w-full pl-12 pr-24 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
-              <button
-                onClick={handleSearch}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700"
-              >
-                Search
-              </button>
             </div>
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white"
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white cursor-pointer"
             >
-              <option value="">All Categories</option>
+              <option value="all">All Categories</option>
               {cats.map((c) => (
                 <option key={c} value={c}>
                   {c}
@@ -383,7 +349,7 @@ function ListProducts() {
                 key={p.id}
                 className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               >
-                <div className="relative h-56 bg-gradient-to-br from-blue-100 to-indigo-100 overflow-hidden group">
+                <div className="relative h-56 bg-linear-to-br from-blue-100 to-indigo-100 overflow-hidden group">
                   {p.imageUrl ? (
                     <img
                       src={p.imageUrl}
@@ -405,8 +371,8 @@ function ListProducts() {
                   )}
                   <div className="absolute top-3 left-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
-                      onClick={() => console.log("Edit", p.id)}
-                      className="p-2 bg-white bg-opacity-90 text-blue-600 rounded-lg hover:bg-white shadow-lg"
+                      onClick={() => navigate(`/edit-product/${p.id}`)}
+                      className="p-2 bg-white bg-opacity-90 text-blue-600 rounded-lg hover:bg-white shadow-lg cursor-pointer"
                     >
                       <Edit2 className="w-4 h-4" />
                     </button>
@@ -414,7 +380,7 @@ function ListProducts() {
                       onClick={() =>
                         setDeleteDialog({ isOpen: true, product: p })
                       }
-                      className="p-2 bg-white bg-opacity-90 text-red-600 rounded-lg hover:bg-white shadow-lg"
+                      className="p-2 bg-white bg-opacity-90 text-red-600 rounded-lg hover:bg-white shadow-lg cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -440,7 +406,7 @@ function ListProducts() {
                       onClick={() =>
                         setStockDialog({ isOpen: true, product: p })
                       }
-                      className="group flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-blue-100 rounded-lg transition-colors"
+                      className="group flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
                     >
                       <Package className="w-4 h-4 text-gray-600 group-hover:text-blue-600" />
                       <span className="text-sm font-semibold text-gray-700 group-hover:text-blue-600">

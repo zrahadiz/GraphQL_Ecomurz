@@ -34,9 +34,6 @@ export default function StockUpdateDialog({
         >
           <X className="w-5 h-5" />
         </button>
-        <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-4">
-          <Package className="w-6 h-6 text-blue-600" />
-        </div>
         <h3 className="text-xl font-bold text-gray-900 mb-2">Update Stock</h3>
         <p className="text-gray-600 mb-4">
           Update stock quantity for{" "}

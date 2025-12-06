@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "name": "Laptop Gaming ROG",
+    "description": "High-performance gaming laptop with RTX 4070",
+    "price": 25000000,
+    "category": "Electronics",
+    "stock": 15,
+    "imageUrl":
+      "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=300",
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Mechanical Keyboard",
+    "description": "RGB mechanical keyboard with Cherry MX switches",
+    "price": 1500000,
+    "category": "Electronics",
+    "stock": 50,
+    "imageUrl":
+      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300",
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "3",
+    "name": "Wireless Mouse",
+    "description": "Ergonomic wireless mouse with precision sensor",
+    "price": 500000,
+    "category": "Electronics",
+    "stock": 100,
+    "imageUrl":
+      "https://images.unsplash.com/photo-1527814050087-3793815479db?w=300",
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "4",
+    "name": "USB-C Hub",
+    "description": "7-in-1 USB-C hub with HDMI and card reader",
+    "price": 350000,
+    "category": "Accessories",
+    "stock": 75,
+    "imageUrl":
+      "https://images.unsplash.com/photo-1625948515291-69613efd103f?w=300",
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  }
+]
