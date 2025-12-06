@@ -67,9 +67,7 @@ function ListProducts() {
       });
       setProducts(result.data.products);
     } catch (err) {
-      setError(
-        "Failed to fetch products. Make sure backend is running on http://localhost:4000"
-      );
+      setError("Failed to fetch products.");
       console.error("Error fetching products:", err);
     }
     setLoading(false);
